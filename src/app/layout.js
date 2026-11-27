@@ -1,7 +1,7 @@
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ["latin", "vietnamese"],
   variable: "--font-sans",
   display: "swap",
@@ -14,14 +14,14 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Caro Arena — Cờ Caro Online & AI",
-  description: "Chơi cờ caro trực tuyến 2 người qua phòng riêng hoặc đấu với AI thông minh.",
+  title: "Cờ Caro Online",
+  description: "Chơi cờ caro trực tuyến 2 người hoặc đấu với máy.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="vi" className={`${plusJakarta.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-sans antialiased bg-slate-950 text-slate-100 selection:bg-sky-500/30 selection:text-sky-200">
+    <html lang="vi" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="font-sans antialiased bg-stone-100 text-stone-900 selection:bg-blue-100 selection:text-blue-900">
         {children}
       </body>
     </html>

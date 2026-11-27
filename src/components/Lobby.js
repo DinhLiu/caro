@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Globe, Cpu, Users, Sparkles, ArrowRight, Plus, LogIn, ShieldCheck } from "lucide-react";
+import { Globe, Cpu, Users, Plus, LogIn, ArrowRight } from "lucide-react";
 
 export default function Lobby({
   initialRoomCode = "",
@@ -53,78 +53,82 @@ export default function Lobby({
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-10">
-      {/* Hero Title */}
-      <div className="text-center mb-8 max-w-lg">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs font-medium mb-4">
-          <Sparkles className="w-3.5 h-3.5" />
-          Cờ Caro Thế Hệ Mới • 15×15 & 19×19
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8">
+      {/* Header */}
+      <div className="text-center mb-6 max-w-md">
+        <div className="inline-flex items-center justify-center gap-2 mb-3">
+          <span className="w-8 h-8 rounded-lg bg-red-50 border border-red-200 text-red-600 font-extrabold flex items-center justify-center text-lg">
+            X
+          </span>
+          <span className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-blue-600 font-extrabold flex items-center justify-center text-lg">
+            O
+          </span>
         </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
-          Caro <span className="bg-gradient-to-r from-rose-400 via-fuchsia-400 to-sky-400 bg-clip-text text-transparent">Arena</span>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mb-1.5">
+          Cờ Caro Online
         </h1>
-        <p className="text-slate-400 text-sm sm:text-base">
-          Thách đấu bạn bè trực tuyến qua mã phòng, hoặc luyện tập cùng AI thông minh.
+        <p className="text-stone-500 text-sm">
+          Chơi cùng bạn bè qua mã phòng hoặc đấu với máy.
         </p>
       </div>
 
       {/* Main Card */}
-      <div className="w-full max-w-md bg-slate-900/80 border border-slate-800 rounded-2xl shadow-2xl backdrop-blur-md overflow-hidden">
+      <div className="w-full max-w-md bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden">
         {/* Mode Tabs */}
-        <div className="grid grid-cols-3 border-b border-slate-800 bg-slate-950/50 p-1.5 gap-1">
+        <div className="grid grid-cols-3 border-b border-stone-200 bg-stone-50 p-1.5 gap-1">
           <button
             type="button"
             onClick={() => { setActiveTab("online"); setError(""); }}
-            className={`flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
+            className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition ${
               activeTab === "online"
-                ? "bg-slate-800 text-white shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-white text-stone-900 shadow-sm border border-stone-200/80"
+                : "text-stone-500 hover:text-stone-800"
             }`}
           >
-            <Globe className="w-4 h-4 text-sky-400" />
+            <Globe className="w-4 h-4 text-blue-600" />
             Online
           </button>
           <button
             type="button"
             onClick={() => { setActiveTab("ai"); setError(""); }}
-            className={`flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
+            className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition ${
               activeTab === "ai"
-                ? "bg-slate-800 text-white shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-white text-stone-900 shadow-sm border border-stone-200/80"
+                : "text-stone-500 hover:text-stone-800"
             }`}
           >
-            <Cpu className="w-4 h-4 text-rose-400" />
-            Đấu AI
+            <Cpu className="w-4 h-4 text-red-600" />
+            Đấu Máy
           </button>
           <button
             type="button"
             onClick={() => { setActiveTab("local"); setError(""); }}
-            className={`flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
+            className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition ${
               activeTab === "local"
-                ? "bg-slate-800 text-white shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-white text-stone-900 shadow-sm border border-stone-200/80"
+                : "text-stone-500 hover:text-stone-800"
             }`}
           >
-            <Users className="w-4 h-4 text-emerald-400" />
-            2P Offline
+            <Users className="w-4 h-4 text-emerald-600" />
+            2 Người
           </button>
         </div>
 
-        <div className="p-6 space-y-5">
-          {/* Shared Board & Rule Settings */}
+        <div className="p-5 sm:p-6 space-y-5">
+          {/* Board Size & Rule Mode */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Kích thước bàn</label>
-              <div className="grid grid-cols-2 gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <label className="block text-xs font-medium text-stone-500 mb-1.5">Bàn cờ</label>
+              <div className="grid grid-cols-2 gap-1 bg-stone-100 p-1 rounded-lg">
                 {[15, 19].map((size) => (
                   <button
                     key={size}
                     type="button"
                     onClick={() => setBoardSize(size)}
-                    className={`py-1.5 rounded-lg text-xs font-semibold transition ${
+                    className={`py-1.5 rounded-md text-xs font-semibold transition ${
                       boardSize === size
-                        ? "bg-slate-800 text-sky-300"
-                        : "text-slate-400 hover:text-slate-200"
+                        ? "bg-white text-stone-900 shadow-sm"
+                        : "text-stone-500 hover:text-stone-800"
                     }`}
                   >
                     {size}×{size}
@@ -134,16 +138,15 @@ export default function Lobby({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Luật chơi</label>
-              <div className="grid grid-cols-2 gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <label className="block text-xs font-medium text-stone-500 mb-1.5">Luật chơi</label>
+              <div className="grid grid-cols-2 gap-1 bg-stone-100 p-1 rounded-lg">
                 <button
                   type="button"
                   onClick={() => setRuleMode("freestyle")}
-                  title="Đủ 5 quân liên tiếp là thắng"
-                  className={`py-1.5 rounded-lg text-xs font-semibold transition ${
+                  className={`py-1.5 rounded-md text-xs font-semibold transition ${
                     ruleMode === "freestyle"
-                      ? "bg-slate-800 text-sky-300"
-                      : "text-slate-400 hover:text-slate-200"
+                      ? "bg-white text-stone-900 shadow-sm"
+                      : "text-stone-500 hover:text-stone-800"
                   }`}
                 >
                   Tự do
@@ -151,11 +154,10 @@ export default function Lobby({
                 <button
                   type="button"
                   onClick={() => setRuleMode("caro_vn")}
-                  title="Chặn 2 đầu không thắng"
-                  className={`py-1.5 rounded-lg text-xs font-semibold transition ${
+                  className={`py-1.5 rounded-md text-xs font-semibold transition ${
                     ruleMode === "caro_vn"
-                      ? "bg-slate-800 text-sky-300"
-                      : "text-slate-400 hover:text-slate-200"
+                      ? "bg-white text-stone-900 shadow-sm"
+                      : "text-stone-500 hover:text-stone-800"
                   }`}
                 >
                   Caro VN
@@ -168,14 +170,14 @@ export default function Lobby({
           {activeTab === "online" && (
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Tên hiển thị của bạn</label>
+                <label className="block text-xs font-medium text-stone-500 mb-1.5">Tên của bạn</label>
                 <input
                   type="text"
                   maxLength={20}
-                  placeholder="Nhập tên (tùy chọn)..."
+                  placeholder="Nhập tên hiển thị (tùy chọn)"
                   value={playerName}
                   onChange={(e) => setPlayerName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-sky-500 transition"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-stone-300 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition"
                 />
               </div>
 
@@ -183,16 +185,16 @@ export default function Lobby({
                 type="button"
                 disabled={loading}
                 onClick={handleCreate}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-400 hover:to-indigo-400 disabled:opacity-50 text-white font-semibold text-sm shadow-lg shadow-sky-500/20 transition"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold text-sm transition"
               >
                 <Plus className="w-4 h-4" />
-                {loading ? "Đang xử lý..." : "Tạo Phòng Mới (Cầm quân X)"}
+                {loading ? "Đang tạo phòng..." : "Tạo phòng mới (Quân X)"}
               </button>
 
               <div className="relative flex py-1 items-center">
-                <div className="flex-grow border-t border-slate-800" />
-                <span className="flex-shrink mx-3 text-xs text-slate-500 uppercase tracking-wider">Hoặc vào phòng</span>
-                <div className="flex-grow border-t border-slate-800" />
+                <div className="flex-grow border-t border-stone-200" />
+                <span className="flex-shrink mx-3 text-xs text-stone-400">Hoặc vào phòng có sẵn</span>
+                <div className="flex-grow border-t border-stone-200" />
               </div>
 
               <form onSubmit={handleJoin} className="flex gap-2">
@@ -202,12 +204,12 @@ export default function Lobby({
                   placeholder="Mã phòng (VD: A1B2C)"
                   value={roomInput}
                   onChange={(e) => setRoomInput(e.target.value.toUpperCase())}
-                  className="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm font-mono uppercase tracking-widest text-center text-amber-300 placeholder:text-slate-600 placeholder:tracking-normal placeholder:font-sans focus:outline-none focus:border-emerald-500 transition"
+                  className="flex-1 px-3 py-2.5 rounded-lg bg-white border border-stone-300 text-sm font-mono uppercase tracking-widest text-center text-stone-900 placeholder:text-stone-400 placeholder:tracking-normal placeholder:font-sans focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition"
                 />
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold text-sm transition"
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold text-sm transition"
                 >
                   <LogIn className="w-4 h-4" />
                   Vào
@@ -220,7 +222,7 @@ export default function Lobby({
           {activeTab === "ai" && (
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Độ khó AI</label>
+                <label className="block text-xs font-medium text-stone-500 mb-1.5">Độ khó</label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     { id: "easy", label: "Dễ" },
@@ -231,10 +233,10 @@ export default function Lobby({
                       key={lvl.id}
                       type="button"
                       onClick={() => setAiDifficulty(lvl.id)}
-                      className={`py-2 rounded-xl text-xs font-semibold border transition ${
+                      className={`py-2 rounded-lg text-xs font-semibold border transition ${
                         aiDifficulty === lvl.id
-                          ? "bg-rose-500/15 border-rose-500/50 text-rose-300"
-                          : "bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200"
+                          ? "bg-stone-900 border-stone-900 text-white"
+                          : "bg-white border-stone-300 text-stone-700 hover:bg-stone-50"
                       }`}
                     >
                       {lvl.label}
@@ -244,15 +246,15 @@ export default function Lobby({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Chọn quân của bạn</label>
+                <label className="block text-xs font-medium text-stone-500 mb-1.5">Quân của bạn</label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => setHumanSymbol("X")}
-                    className={`py-2 rounded-xl text-xs font-semibold border transition ${
+                    className={`py-2 rounded-lg text-xs font-semibold border transition ${
                       humanSymbol === "X"
-                        ? "bg-rose-500/15 border-rose-500/50 text-rose-300"
-                        : "bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200"
+                        ? "bg-red-50 border-red-400 text-red-700"
+                        : "bg-white border-stone-300 text-stone-700 hover:bg-stone-50"
                     }`}
                   >
                     Quân X (Đi trước)
@@ -260,10 +262,10 @@ export default function Lobby({
                   <button
                     type="button"
                     onClick={() => setHumanSymbol("O")}
-                    className={`py-2 rounded-xl text-xs font-semibold border transition ${
+                    className={`py-2 rounded-lg text-xs font-semibold border transition ${
                       humanSymbol === "O"
-                        ? "bg-sky-500/15 border-sky-500/50 text-sky-300"
-                        : "bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200"
+                        ? "bg-blue-50 border-blue-400 text-blue-700"
+                        : "bg-white border-stone-300 text-stone-700 hover:bg-stone-50"
                     }`}
                   >
                     Quân O (Đi sau)
@@ -282,9 +284,9 @@ export default function Lobby({
                     humanSymbol,
                   })
                 }
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-400 hover:to-orange-400 text-white font-semibold text-sm shadow-lg shadow-rose-500/20 transition"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-stone-900 hover:bg-stone-800 text-white font-semibold text-sm transition"
               >
-                Bắt Đầu Đấu AI
+                Bắt đầu chơi
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -293,12 +295,9 @@ export default function Lobby({
           {/* LOCAL 2P TAB */}
           {activeTab === "local" && (
             <div className="space-y-4">
-              <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 text-xs text-slate-400 leading-relaxed flex gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>
-                  Hai người chơi luân phiên trên cùng một thiết bị. Hỗ trợ đi lại nước cờ và tính điểm nhiều ván.
-                </span>
-              </div>
+              <p className="p-3 rounded-lg bg-stone-50 border border-stone-200 text-xs text-stone-600 leading-relaxed">
+                Hai người chơi luân phiên trên cùng một máy. Hỗ trợ đi lại nước cờ và tính tỷ số qua nhiều ván.
+              </p>
 
               <button
                 type="button"
@@ -309,17 +308,17 @@ export default function Lobby({
                     ruleMode,
                   })
                 }
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/20 transition"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-stone-900 hover:bg-stone-800 text-white font-semibold text-sm transition"
               >
-                Chơi 2 Người Ngay
+                Chơi 2 người ngay
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           )}
 
-          {/* Error Banner */}
+          {/* Error */}
           {error && (
-            <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs text-center">
+            <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs text-center">
               {error}
             </div>
           )}

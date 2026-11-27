@@ -2,25 +2,21 @@
 
 import { useMemo } from "react";
 
-function PieceIcon({ symbol, isGhost = false, isWinning = false }) {
+function PieceIcon({ symbol, isGhost = false }) {
   if (symbol === "X") {
     return (
       <svg
         viewBox="0 0 24 24"
-        className={`w-[68%] h-[68%] ${
-          isGhost
-            ? "opacity-30 text-rose-400"
-            : isWinning
-            ? "text-rose-400 drop-shadow-[0_0_8px_rgba(251,113,133,0.8)] animate-win-pulse"
-            : "text-rose-500 drop-shadow-[0_1px_3px_rgba(244,63,94,0.4)] animate-pop-in"
+        className={`w-[68%] h-[68%] block shrink-0 ${
+          isGhost ? "opacity-25 text-red-600" : "text-red-600 animate-pop-in"
         }`}
         fill="none"
         stroke="currentColor"
-        strokeWidth="3.2"
+        strokeWidth="3"
         strokeLinecap="round"
       >
-        <line x1="5" y1="5" x2="19" y2="19" />
-        <line x1="19" y1="5" x2="5" y2="19" />
+        <line x1="5.5" y1="5.5" x2="18.5" y2="18.5" />
+        <line x1="18.5" y1="5.5" x2="5.5" y2="18.5" />
       </svg>
     );
   }
@@ -28,18 +24,14 @@ function PieceIcon({ symbol, isGhost = false, isWinning = false }) {
   return (
     <svg
       viewBox="0 0 24 24"
-      className={`w-[66%] h-[66%] ${
-        isGhost
-          ? "opacity-30 text-sky-400"
-          : isWinning
-          ? "text-sky-300 drop-shadow-[0_0_8px_rgba(56,189,248,0.85)] animate-win-pulse"
-          : "text-sky-400 drop-shadow-[0_1px_3px_rgba(56,189,248,0.4)] animate-pop-in"
+      className={`w-[66%] h-[66%] block shrink-0 ${
+        isGhost ? "opacity-25 text-blue-600" : "text-blue-600 animate-pop-in"
       }`}
       fill="none"
       stroke="currentColor"
-      strokeWidth="3.2"
+      strokeWidth="3"
     >
-      <circle cx="12" cy="12" r="7.5" />
+      <circle cx="12" cy="12" r="7" />
     </svg>
   );
 }
@@ -83,13 +75,12 @@ export default function Board({
   const starPoints = useMemo(() => getStarPoints(boardSize), [boardSize]);
 
   return (
-    <div className="relative p-2 sm:p-3 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-sm">
+    <div className="w-full max-w-[min(94vw,540px)] mx-auto bg-white p-1.5 sm:p-2.5 rounded-xl border border-stone-300 shadow-sm">
       <div
-        className="grid bg-slate-700/70 gap-[1px] rounded-xl overflow-hidden border border-slate-700/80 select-none"
+        className="grid w-full aspect-square bg-stone-300 gap-[1px] border border-stone-400 select-none overflow-hidden"
         style={{
           gridTemplateColumns: `repeat(${boardSize}, minmax(0, 1fr))`,
-          width: "min(92vw, 560px)",
-          height: "min(92vw, 560px)",
+          gridTemplateRows: `repeat(${boardSize}, minmax(0, 1fr))`,
         }}
       >
         {board.map((cell, idx) => {
@@ -105,32 +96,28 @@ export default function Board({
               disabled={!canPlay || !isEmpty}
               onClick={() => canPlay && isEmpty && onCellClick(idx)}
               aria-label={`Ô ${Math.floor(idx / boardSize) + 1}-${(idx % boardSize) + 1}${cell ? ` (${cell})` : ""}`}
-              className={`group relative flex items-center justify-center transition-colors duration-100 focus:outline-none ${
+              className={`group relative w-full h-full min-w-0 min-h-0 flex items-center justify-center p-0 overflow-hidden focus:outline-none ${
                 isWin
-                  ? "bg-emerald-500/25 ring-1 ring-inset ring-emerald-400/60"
+                  ? "bg-emerald-100"
                   : isLast
-                  ? "bg-amber-500/15"
-                  : "bg-slate-900/95"
-              } ${canPlay && isEmpty ? "cursor-pointer hover:bg-slate-800/90" : "cursor-default"}`}
+                  ? "bg-amber-100"
+                  : "bg-[#fdfcf8]"
+              } ${canPlay && isEmpty ? "cursor-pointer sm:hover:bg-stone-100 active:bg-stone-200" : "cursor-default"}`}
             >
-              {/* Star point dot */}
               {isEmpty && isStar && (
-                <span className="absolute w-1.5 h-1.5 rounded-full bg-slate-600/80 pointer-events-none group-hover:opacity-0 transition-opacity" />
+                <span className="w-1.5 h-1.5 rounded-full bg-stone-400 pointer-events-none" />
               )}
 
-              {/* Placed piece */}
-              {!isEmpty && <PieceIcon symbol={cell} isWinning={isWin} />}
+              {!isEmpty && <PieceIcon symbol={cell} />}
 
-              {/* Hover ghost preview */}
               {isEmpty && canPlay && (
-                <span className="hidden group-hover:flex items-center justify-center w-full h-full pointer-events-none">
+                <span className="hidden sm:group-hover:flex items-center justify-center w-full h-full pointer-events-none">
                   <PieceIcon symbol={currentTurn} isGhost />
                 </span>
               )}
 
-              {/* Last move subtle corner indicator */}
               {isLast && !isWin && (
-                <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.9)] pointer-events-none" />
+                <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-amber-500 pointer-events-none" />
               )}
             </button>
           );
